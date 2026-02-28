@@ -20,15 +20,7 @@ class HomeController extends GetxController {
   final Rx<UserModel?> currentUser = Rx<UserModel?>(null);
   final RxBool isLoginLoading = false.obs;
 
-  // ScrollController for the single CustomScrollView.
   late ScrollController scrollController;
-
-  // Offset to scroll to when switching tabs (tab bar pinned position).
-  double _tabBarScrollOffset = 0;
-
-  void setTabBarScrollOffset(double offset) {
-    _tabBarScrollOffset = offset;
-  }
 
   @override
   void onInit() {
@@ -78,21 +70,6 @@ class HomeController extends GetxController {
     } else {
       final category = categories[index - 1];
       currentProducts.value = List.from(_categoryProductsCache[category] ?? []);
-    }
-
-    // Scroll to the tab bar position so new tab shows products from the top.
-    _scrollToTabBar();
-  }
-
-  void _scrollToTabBar() {
-    if (scrollController.hasClients && _tabBarScrollOffset > 0) {
-      // Scroll to just above where the tab bar pins (banner height).
-      // This ensures the tab bar is at the top and products start fresh.
-      scrollController.animateTo(
-        _tabBarScrollOffset,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeOut,
-      );
     }
   }
 
